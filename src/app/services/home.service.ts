@@ -8,7 +8,6 @@ import { Observable } from 'rxjs';
 export class HomeService {
   private apiUrl = 'http://localhost:8080/tasks';
 
-
   constructor(private http: HttpClient) {}
 
   getTasks(): Observable<any> {

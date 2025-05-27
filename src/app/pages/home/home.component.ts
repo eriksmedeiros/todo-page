@@ -1,13 +1,13 @@
-import { HomeService } from './../services/home.service';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { HomeService } from '../../services/home.service';
 
 @Component({
-  selector: 'app-home',
-  imports: [ReactiveFormsModule, CommonModule],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+    selector: 'app-home',
+    imports: [ReactiveFormsModule, CommonModule],
+    templateUrl: './home.component.html',
+    styleUrl: './home.component.css'
 })
 export class HomeComponent {
 
@@ -19,17 +19,17 @@ export class HomeComponent {
     todoForm: FormGroup;
     tasks: any[] = [];
 
-    constructor(private formBuilder: FormBuilder,
-                private homeService: HomeService)
-    {
+    constructor(private formBuilder: FormBuilder, private homeService: HomeService) {
         this.todoForm = this.formBuilder.group({
             title: [''],
-            status: ['pending']
+            status: ['']
         });
     }
 
     getTasks(): void {
-
+        this.homeService.getTasks().subscribe(tasks => {
+            this.tasks = tasks;
+        })
     }
 
     addTask(): void {
@@ -37,10 +37,12 @@ export class HomeComponent {
         if (task) {
             this.taskObj = {
                 title: task.title,
-                status: task.status
+                status: task.status || 'pending'
             };
-            this.tasks.push(this.taskObj);
-            this.todoForm.reset();
+            this.homeService.addTask(this.taskObj).subscribe(task => {
+                this.tasks.push(this.taskObj);
+                this.todoForm.reset();
+            })
         }
     }
 }
