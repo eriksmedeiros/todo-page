@@ -17,4 +17,8 @@ export class HomeService {
   addTask(task: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/add`, task);
   }
+
+  editTask(task: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/update/${task.id}`, task);
+  }
 }
