@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class HomeService {
-  private apiUrl = 'http://localhost:8080/tasks';
+  private apiUrl = '/api/tasks';
 
   constructor(private http: HttpClient) {}
 
@@ -15,6 +15,6 @@ export class HomeService {
   }
 
   addTask(task: any): Observable<any> {
-    return this.http.post(this.apiUrl, task);
+    return this.http.post(`${this.apiUrl}/add`, task);
   }
 }
