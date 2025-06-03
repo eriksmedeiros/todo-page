@@ -1,48 +1,74 @@
+import { Task } from './../../models/task';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { HomeService } from '../../services/home.service';
 
 @Component({
-    selector: 'app-home',
-    imports: [ReactiveFormsModule, CommonModule],
-    templateUrl: './home.component.html',
-    styleUrl: './home.component.css'
+  selector: 'app-home',
+  imports: [ReactiveFormsModule, CommonModule],
+  templateUrl: './home.component.html',
+  styleUrl: './home.component.css'
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
 
-    taskObj: any = {
-        title: '',
-        status: ''
-    };
+  todoForm!: FormGroup;
+  tasks: Task[] = [];
+  taskObj!: Task;
+  isEditing: boolean = false;
+  taskIdToEdit: any;
 
-    todoForm: FormGroup;
-    tasks: any[] = [];
+  constructor(private formBuilder: FormBuilder, private homeService: HomeService) { }
 
-    constructor(private formBuilder: FormBuilder, private homeService: HomeService) {
-        this.todoForm = this.formBuilder.group({
-            title: [''],
-            status: ['']
-        });
+  ngOnInit(): void {
+    this.todoForm = this.formBuilder.group({
+      title: [''],
+      status: ['']
+    });
+    this.getTasks();
+  }
+
+  getTasks(): void {
+    this.homeService.getTasks().subscribe(tasks => {
+      this.tasks = tasks;
+    })
+  }
+
+  addTask(): void {
+    const task = this.todoForm.value;
+    if (task) {
+      this.taskObj = {
+        id: null, // Assuming the backend will generate the ID
+        title: task.title,
+        status: 'pending'
+      };
+      this.homeService.addTask(this.taskObj).subscribe(task => {
+        this.tasks.push(task);
+        this.todoForm.reset();
+      })
+
     }
+  }
 
-    getTasks(): void {
-        this.homeService.getTasks().subscribe(tasks => {
-            this.tasks = tasks;
-        })
-    }
+  editTask(): void {
+    const task = this.todoForm.value;
 
-    addTask(): void {
-        const task = this.todoForm.value;
-        if (task) {
-            this.taskObj = {
-                title: task.title,
-                status: task.status || 'pending'
-            };
-            this.homeService.addTask(this.taskObj).subscribe(task => {
-                this.tasks.push(this.taskObj);
-                this.todoForm.reset();
-            })
+    if (task) {
+      this.taskObj = {
+        id: this.taskIdToEdit,
+        title: task.title,
+        status: 'pending'
+      };
+
+      this.homeService.editTask(this.taskObj).subscribe(() => {
+        const index = this.tasks.findIndex(t => t.id === this.taskIdToEdit);
+        if (index != -1) {
+          this.tasks[index] = this.taskObj;
+          this.isEditing = false;
+          this.taskIdToEdit = null;
         }
+        this.todoForm.reset();
+      });
     }
+  }
 }

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Task } from '../models/task';
 
 @Injectable({
   providedIn: 'root'
@@ -10,15 +11,15 @@ export class HomeService {
 
   constructor(private http: HttpClient) {}
 
-  getTasks(): Observable<any> {
-    return this.http.get(this.apiUrl);
+  getTasks(): Observable<Task[]> {
+    return this.http.get<Task[]>(this.apiUrl);
   }
 
-  addTask(task: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/add`, task);
+  addTask(task: Task): Observable<Task> {
+    return this.http.post<Task>(`${this.apiUrl}/add`, task);
   }
 
-  editTask(task: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/update/${task.id}`, task);
+  editTask(task: Task): Observable<Task> {
+    return this.http.put<Task>(`${this.apiUrl}/update/${task.id}`, task);
   }
 }
