@@ -23,7 +23,7 @@ export class HomeService {
     return this.http.put<Task>(`${this.apiUrl}/update/${task.id}`, task);
   }
 
-  deleteTask(task: Task): Observable<string> {
-    return this.http.delete(`${this.apiUrl}/delete/${task.id}`, { responseType: 'text' });
+  deleteTask(task: Task): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/delete/${task.id}`);
   }
 }
