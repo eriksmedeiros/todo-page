@@ -1,7 +1,7 @@
+import { Task } from './../models/task';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Task } from '../models/task';
 
 @Injectable({
   providedIn: 'root'
@@ -21,5 +21,9 @@ export class HomeService {
 
   editTask(task: Task): Observable<Task> {
     return this.http.put<Task>(`${this.apiUrl}/update/${task.id}`, task);
+  }
+
+  deleteTask(task: Task): Observable<string> {
+    return this.http.delete(`${this.apiUrl}/delete/${task.id}`, { responseType: 'text' });
   }
 }

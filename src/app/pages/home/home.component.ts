@@ -71,4 +71,13 @@ export class HomeComponent implements OnInit {
       });
     }
   }
+
+  deleteTask(task: Task): void {
+    this.homeService.deleteTask(task).subscribe(() => {
+      const index = this.tasks.findIndex(t => t.id === task.id);
+      if (index !== -1) {
+        this.tasks.splice(index, 1);
+      }
+    })
+  }
 }

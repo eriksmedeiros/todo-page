@@ -21,8 +21,6 @@
               </button>
               </div>
 
-              <div class="col-12 col-md-auto"> <button type="button" class="btn btn-warning">Get tasks</button>
-              </div>
             </form>
 
             <table class="table mb-4">
@@ -40,10 +38,10 @@
                   <td>{{task.title}}</td>
                   <td>{{task.status}}</td>
                   <td>
-                    <button type="button" class="btn btn-danger">
+                    <button type="button" class="btn btn-danger" (click)="deleteTask(task)">
                       <i class="bi bi-trash"></i>
                     </button>
-                    <button type="button" class="btn btn-success ms-1" >
+                    <button type="button" class="btn btn-success ms-1" (click)="task.status = 'completed'">
                       <i class="bi bi-check-lg"></i>
                     </button>
                     <button type="button" class="btn btn-warning ms-1" (click)="isEditing = true ; taskIdToEdit = task.id">
