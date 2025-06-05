@@ -11,13 +11,13 @@
              (ngSubmit)="isEditing ? editTask() : addTask()">
               <div class="col-12 col-md-auto">
                 <div class="form-floating">
-                  <input type="text" class="form-control" placeholder="Enter a task here" formControlName="title" />
-                  <label>Enter a task here</label>
+                  <input type="text" class="form-control" placeholder="Digite a tarefa aqui" formControlName="title" />
+                  <label>Digite a tarefa aqui</label>
                 </div>
               </div>
 
               <div class="col-12 col-md-auto"> <button type="submit" class="btn btn-primary">
-                {{ isEditing ? 'Update Task' : 'Add Task' }}
+                {{ isEditing ? 'Atualizar' : 'Adicionar Tarefa' }}
               </button>
               </div>
 
@@ -26,10 +26,10 @@
             <table class="table mb-4">
               <thead>
                 <tr>
-                  <th scope="col">No.</th>
-                  <th scope="col">Todo item</th>
+                  <th scope="col">Item</th>
+                  <th scope="col">Tarefa</th>
                   <th scope="col">Status</th>
-                  <th scope="col">Actions</th>
+                  <th scope="col">Ações</th>
                 </tr>
               </thead>
               <tbody>
@@ -41,7 +41,7 @@
                     <button type="button" class="btn btn-danger" (click)="deleteTask(task)">
                       <i class="bi bi-trash"></i>
                     </button>
-                    <button type="button" class="btn btn-success ms-1" (click)="task.status = 'completed'">
+                    <button type="button" class="btn btn-success ms-1" (click)="task.status = 'Concluída'">
                       <i class="bi bi-check-lg"></i>
                     </button>
                     <button type="button" class="btn btn-warning ms-1" (click)="isEditing = true ; taskIdToEdit = task.id">

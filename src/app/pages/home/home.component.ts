@@ -40,7 +40,7 @@ export class HomeComponent implements OnInit {
       this.taskObj = {
         id: null, // Assuming the backend will generate the ID
         title: task.title,
-        status: 'pending'
+        status: 'Pendente'
       };
       this.homeService.addTask(this.taskObj).subscribe(task => {
         this.tasks.push(task);
@@ -57,7 +57,7 @@ export class HomeComponent implements OnInit {
       this.taskObj = {
         id: this.taskIdToEdit,
         title: task.title,
-        status: 'pending'
+        status: 'Pendente'
       };
 
       this.homeService.editTask(this.taskObj).subscribe(() => {
