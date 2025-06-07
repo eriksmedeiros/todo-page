@@ -1,6 +1,6 @@
 {
   "/api": {
-    "target": "https://api-todo-xfef.onrender.com",
+    "target": "",
     "secure": true,
     "changeOrigin": true,
     "pathRewrite": {
